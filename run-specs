@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
+dirs=($(find . -maxdepth 1 ! -path . ! -path ./.git -type d))
+for dir in "${dirs[@]}"; do
+  cd "$dir"
+  echo "$PWD" && crystal spec && echo ""
+  cd ..
+done
