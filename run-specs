@@ -3,9 +3,12 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-dirs=($(find . -maxdepth 1 ! -path . ! -path ./.git -type d))
+dirs=($(find . -maxdepth 1 ! -path . ! -path ./.git ! -path ./.github -type d))
 for dir in "${dirs[@]}"; do
   cd "$dir"
-  echo "$PWD" && crystal spec && echo ""
+  echo "$PWD"
+  crystal tool format --check src/
+  crystal spec
+  echo ""
   cd ..
 done
